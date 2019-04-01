@@ -2,49 +2,39 @@
     <div class="container mt-2">
         <div class="row">
             <div class="col">
-                {{#if respuesta}}
-                {{else}}
-                    <div class="alert alert-warning" role="alert">
-                        <p>Este usuario ya se encuentra inscrito en este curso.</p>
-                    </div>
-                {{/if}}
+                {{{validarInscripcionAspirante respuesta}}}
             </div>
+        </div>
+        <div class="ror">
+            <h2>Formulario para inscribirse en un curso</h2>
         </div>
         <div class="row">
             <div class="col">
-                <form action="/crearcurso" method="POST">
+                <form action="/inscripcioncurso" method="POST">
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label for="nombre">id</label>
-                            <input type="text" class="form-control" id="idcurso" name="idcurso" required>
+                            <label for="documentoidentidad">Documento de identidad</label>
+                            <input type="text" class="form-control" id="documentoidentidad" name="documentoidentidad" required>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="nombrecurso">nombre</label>
-                            <input type="text" class="form-control" id="nombrecurso" name="nombrecurso" required>
+                            <label for="correoaspirante">Correo electronico</label>
+                            <input type="email" class="form-control" id="correoaspirante" name="correoaspirante" required>
                         </div>
                     </div>
                     <div class="row"> 
                         <div class="form-group col-md-6">
-                            <label for="modalidadcurso">modalidad</label>
-                            <select class="form-control" id="modalidadcurso" name="modalidadcurso">
-                                <option value="">Selecciona modalidad...</option>
-                                <option value="virtual">Virtual</option>
-                                <option value="presencial">Presencial</option>
-                            </select>
+                            <label for="nombreaspirante">Nombre</label>
+                            <input type="text" class="form-control" id="nombreaspirante" name="nombreaspirante" required>
                         </div>
                         <div class="form-group col-md-6">
-                            <label for="valorcurso">valor</label>
-                            <input type="number" class="form-control" id="valorcurso" name="valorcurso" required>
+                            <label for="telefonoaspirante">Telefono</label>
+                            <input type="number" class="form-control" id="telefonoaspirante" name="telefonoaspirante" required>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-6">
-                            <label for="descripcioncurso">Descripción</label>
-                            <textarea class="form-control" id="descripcioncurso" name="descripcioncurso" required></textarea>
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label for="intensidadhorariacurso">Intensidad horaria</label>
-                            <input type="number" class="form-control" id="intensidadhorariacurso" name="intensidadhorariacurso">
+                        <div class="form-group col-md-12">
+                            <label for="modalidadcurso">Cursos disponibles</label>
+                            {{{selectHtmlCursosDisponibles}}}
                         </div>
                     </div>
                     <div class="row d-flex justify-content-center">

@@ -23,25 +23,8 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: false }))
 
 app.get('/', (req, res) => {
-    res.render('index', {
-        estudiante: 'Erika'
-    });
+    res.render('index');
 });
-
-app.get('/calculos', (req,res) =>{
-
-    console.log(req.query);
-    res.render('calculos', {
-        estudiante: req.query.nombre,
-        nota1: parseInt(req.query.nota1),
-        nota2: parseInt(req.query.nota2),
-        nota3: parseInt(req.query.nota3)
-    });
-});
-
-
-
-
 
 app.get('/crearcurso', (req,res) =>{
     res.render('crear-curso', {
@@ -77,6 +60,29 @@ app.post('/crearcurso', (req,res) =>{
 app.get('/listarcursos', (req, res) => {
     res.render('listar-cursos', {
         respuesta: false,
+    });
+});
+
+app.get('/inscripcioncurso', (req,res) =>{
+    res.render('inscripcion-curso', {
+        respuesta: null,
+    });
+});
+
+app.post('/inscripcioncurso', (req,res) =>{
+
+    let nuevoAspirante = {
+        documentoidentidad: req.body.documentoidentidad,
+        correoaspirante:    req.body.correoaspirante,
+        nombreaspirante:    req.body.nombreaspirante,
+        telefonoaspirante:  req.body.telefonoaspirante,
+        curso:              req.body.curso
+    };
+
+    let respuesta = funciones.registrarAspiranteEnCurso(nuevoAspirante);  
+
+    res.render('inscripcion-curso', {
+        respuesta: respuesta,
     });
 });
 

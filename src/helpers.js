@@ -70,3 +70,39 @@ hbs.registerHelper('detalleCursos', () =>{
 
     return texto;
 });
+
+hbs.registerHelper('selectHtmlCursosDisponibles', () =>{
+    listaCursos = require('../listado-cursos');
+    let texto = "<select class='form-control' id='curso' name='curso'>"+
+                    "<option value=''>Seleccione curso...</option>";
+
+    listaCursos.forEach(curso => {
+
+        if(curso.estado == "disponible")
+        {
+            texto = texto + "<option value='"+curso.idcurso +"'>"+curso.nombrecurso +"</option>";
+        }
+    });
+
+    texto = texto + "</select>";
+
+    return texto;
+});
+
+hbs.registerHelper('validarInscripcionAspirante', (resultadoInscripcionAspirante) =>{
+
+    if(resultadoInscripcionAspirante == true)
+    {
+        return "<div class='alert alert-success' role='alert'>"+
+                    "<p>El aspirante se ha registrado en el curso exitosamente.</p>"+
+                "</div>";
+    }
+    else if(resultadoInscripcionAspirante == false)
+    {
+        return "<div class='alert alert-warning' role='alert'>"+
+                    "<p>El aspirante ya se encuentra inscrito en este curso.</p>"+
+                "</div>";
+    }
+    else
+        return "";
+});
