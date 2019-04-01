@@ -7,16 +7,32 @@
     </div>
     <div class="row">
         <div class="col">
-            {{#if respuesta}}
-            <div class="alert alert-success" role="alert">
-                <p>Curso creado exitosamente.</p>
-            </div>
-            {{/if}}
+            {{{validarOperacionCurso respuesta}}}
         </div>
     </div>
     <div class="row">
         <div class="col">
             {{{listarCursos}}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <h2>Cerrar cursos</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <form action="/cambiarEstadoCurso" method="POST">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                        <label for="modalidadcurso">Cursos disponibles</label>
+                        {{{selectHtmlCursosDisponibles}}}
+                    </div>
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
         </div>
     </div>
     <div class="row">

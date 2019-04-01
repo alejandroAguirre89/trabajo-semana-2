@@ -45,7 +45,7 @@ app.post('/crearcurso', (req,res) =>{
 
     let respuesta = funciones.crearCurso(nuevoCurso);  
 
-    if(respuesta)
+    if(respuesta == 1)
         res.render('listar-cursos', {
             respuesta: respuesta,
         });
@@ -60,6 +60,20 @@ app.post('/crearcurso', (req,res) =>{
 app.get('/listarcursos', (req, res) => {
     res.render('listar-cursos', {
         respuesta: false,
+    });
+});
+
+app.post('/cambiarEstadoCurso', (req,res) =>{
+
+    let cursoActualizar = {
+        idcurso:                req.body.curso,
+        estado:                 'cerrado'
+    };
+
+    let respuesta = funciones.actualizarEstadoCurso(cursoActualizar);  
+
+    res.render('listar-cursos', {
+        respuesta: respuesta,
     });
 });
 
@@ -83,6 +97,23 @@ app.post('/inscripcioncurso', (req,res) =>{
 
     res.render('inscripcion-curso', {
         respuesta: respuesta,
+    });
+});
+
+app.get('/listaraspirantesinscritos', (req, res) => {
+    res.render('listar-inscritos', {
+        respuesta: 0
+    });
+});
+
+app.post('/eliminarAspiranteCurso', (req,res) =>{
+
+    funciones.eliminarAspiranteCurso(req.body.documentoidentidad, function (resultado)
+    {
+        console.log('3. mostrar inscritos apenas se haya elimando de archivo json');
+        res.render('listar-inscritos', {
+            respuesta: resultado
+        });
     });
 });
 

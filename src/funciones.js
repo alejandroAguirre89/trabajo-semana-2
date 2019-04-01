@@ -47,7 +47,7 @@ const crearCurso = (curso) => {
     {
         listaCursos.push(nuevoCurso);
         guardarCurso();
-        return true;
+        return 1;
     }
     else
         return false;
@@ -68,12 +68,13 @@ const listarApirantes = () => {
 
 /* registra un aspirante en un curso y lo agrega en el 
 archivo json con los datos del arreglo listaAspirantes*/
-const guardarAspiranteEnCurso = () => {
+const guardarAspiranteEnCurso = (callback) => {
     let datos = JSON.stringify(listaAspirantes);
+    
     fs.writeFile('listado-aspirantes.json', datos, (err =>{
         if (err) throw (err);
-        console.log('Aspirante registrado al curso con exito.');
-    }))
+        callback (true);
+    }));
 }
 
 /*Agrega un nuevo curso al arreglo
@@ -94,16 +95,56 @@ const registrarAspiranteEnCurso = (aspirante) => {
     if(!aspiranteYaRegistradoEnCurso)
     {
         listaAspirantes.push(nuevoAspirante);
-        guardarAspiranteEnCurso();
-        return true;
+        guardarAspiranteEnCurso(function (resultado)
+        {
+            return true;
+        });
     }
     else
         return false;
 }
 
+const actualizarEstadoCurso = (curso) => {
+    listarCursos();
+ 
+    let cursoEncontrado = listaCursos.find(cur => cur.idcurso == curso.idcurso);
+ 
+    if(!cursoEncontrado)
+        console.log('curso no existe');
+    else
+    {
+        cursoEncontrado['estado'] = curso.estado;
+        guardarCurso();
+        return 2;
+    }
+}
+
+const eliminarAspiranteCurso = (documentoIdentidadAspirante, callback) => {
+    listarApirantes();
+ 
+    let aspiranteEliminar = listaAspirantes.findIndex(asp => asp.documentoidentidad == documentoIdentidadAspirante);
+    
+    if(aspiranteEliminar == -1)
+    {
+        console.log('Ningun aspirante tiene numero de documento '+documentoIdentidadAspirante);
+        callback (0);
+    }
+    else
+    {
+        listaAspirantes.splice(aspiranteEliminar, 1);
+
+        guardarAspiranteEnCurso(function (resultado)
+        {
+            callback (1);
+        });
+    }
+}
+
 module.exports = {
     crearCurso,
-    registrarAspiranteEnCurso
+    registrarAspiranteEnCurso,
+    actualizarEstadoCurso,
+    eliminarAspiranteCurso
 }
 
 
